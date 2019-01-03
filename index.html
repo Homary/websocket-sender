@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+    fieldset{
+    	width: 60%;
+    	margin: 50px auto 0 auto;
+    }
+    legend{
+    	font-size: 200%;
+    	font-weight: bold;
+    	color: deepskyblue;
+    }
+    button{
+    	width: 60px;
+    	height: 50px;
+    	color: #FFF;
+    	font-size: 120%;
+    	background: deepskyblue;
+    	border: 1 solid deepskyblue;
+    	border-radius: 50%;
+    	transform: translate(50%, -50%);
+    }
+    </style>
+</head>
+<body>
+	<fieldset>
+		<legend id="total"></legend>
+		<textarea name="text" id="text" cols="60" rows="15"></textarea>
+		<button id="btn">发送</button>
+	</fieldset>
+    
+    <script>
+    	let ws = new WebSocket('ws://{{ip}}');
+
+    	ws.onopen = function() {
+    		console.log('连接成功')
+    	}
+
+    	ws.onmessage = function(msg) {
+    		let p = document.getElementById('total'),
+    			data = JSON.parse(msg.data);
+
+    		if(data.total){
+    			p.innerHTML = `当前连接数: ${data.total - 1}`;
+    		}
+    	}
+
+    	let btn = document.getElementById('btn');
+
+    	btn.addEventListener('click', function() {
+    		let text = document.getElementById('text'),
+    			data = JSON.stringify(text.value);
+
+    		if(data.length <= 2) {
+    			return;
+    		}else{
+    			ws.send(data);
+    		}
+    	}, false)
+    </script>
+</body>
+</html>

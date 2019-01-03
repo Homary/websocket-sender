@@ -1,0 +1,16 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "websocket-sender",
+  "dependencies": {
+    "ws": "^6.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js --port $*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
